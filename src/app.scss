@@ -1,5 +1,260 @@
 .task-card {
-	background: #444;
-	color: #ddd;
-	font-weight: 600;
+	h3 {
+		margin:0;
+	}
+}
+
+.page-container {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	// align-items: center;
+	width: 100%;
+}
+
+.center-stage {
+	text-align: center;
+	padding: 2rem;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	max-width: 500px;
+	margin: 1rem;
+}
+
+.login-button {
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 12px 24px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.login-button:hover {
+	background-color: #218838;
+}
+
+.kanban-board {
+	display: flex;
+	flex-direction: row;
+	overflow-x: auto;
+	gap: 1rem;
+	padding: 1rem;
+	min-height: 100%;
+	width: 100%;
+	align-items: flex-start;
+}
+
+.kanban-column {
+	flex: 0 0 300px;
+	max-width: 300px;
+	background-color: var(--column-bg, #332c2c);
+	color: var(--column-color, rgb(220, 190, 190));
+	border-radius: 8px;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	max-height: calc(100vh - 150px);
+}
+
+.column-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem;
+	border-bottom: 2px solid #e0e0e0;
+	margin-bottom: 0.5rem;
+	position: relative;
+	gap: 0.5rem;
+}
+
+.column-select {
+	font-size: 1.1em;
+	font-weight: bold;
+	color: var(--column-color);
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	width: 100%;
+	/* Take available space */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 0.25rem;
+	text-align: center;
+}
+
+.column-select:focus {
+	outline: none;
+	background-color: #e9ecef;
+	border-radius: 4px;
+}
+
+.task-count {
+	font-size: 1em;
+	font-weight: normal;
+	color: #6c757d;
+}
+
+.remove-column-btn,
+.confirm-delete-btn,
+.cancel-delete-btn {
+	border: none;
+	background: transparent;
+	color: #999;
+	font-size: 1.2rem;
+	padding: 2px 6px;
+	cursor: pointer;
+	border-radius: 4px;
+	line-height: 1;
+}
+
+.remove-column-btn:hover {
+	color: #333;
+	background-color: #dcdcdc;
+}
+
+.confirm-delete-btn {
+	background-color: #dc3545;
+	color: white;
+}
+
+.cancel-delete-btn {
+	background-color: #6c757d;
+	color: white;
+}
+
+.add-column-wrapper {
+	flex: 0 0 300px;
+	padding-top: 1rem;
+}
+
+.add-column-btn {
+	width: 100%;
+	height: 50px;
+	border: 2px dashed #ccc;
+	border-radius: 8px;
+	background-color: #f0f2f588;
+	color: #999;
+	font-size: 1.2rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.add-column-btn:hover {
+	background-color: #e9ecef;
+	color: #333;
+	border-color: #aaa;
+}
+
+.add-column-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 0.5rem;
+	background-color: #e9ecef;
+	border-radius: 8px;
+}
+
+.add-column-input {
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.add-column-form button {
+	padding: 0.5rem;
+	border-radius: 4px;
+	border: 1px solid #999;
+	cursor: pointer;
+}
+
+.add-column-form button[type="submit"] {
+	background-color: #28a745;
+	color: white;
+	border-color: #28a745;
+}
+
+.tasks-list {
+	overflow-y: auto;
+	flex-grow: 1;
+	padding: 0.25rem;
+}
+
+.task-card {
+	position: relative;
+	background-color: var(--task-color, #332c2c);
+	border: 1px solid #dee2e6;
+	border-radius: 6px;
+	padding: 0.75rem;
+	margin-bottom: 0.75rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	cursor: move;
+}
+
+.task-card.is-moving {
+	opacity: 0.5;
+}
+
+.task-card[draggable="false"] {
+	cursor: not-allowed;
+	background-color: #f8f9fa;
+}
+
+.info-message,
+.loading-message {
+	text-align: center;
+	padding: 2rem;
+	font-size: 1.1em;
+	color: #6c757d;
+}
+
+.error-container {
+	text-align: center;
+	padding: 2rem;
+	color: #721c24;
+	background-color: #f8d7da;
+	border: 1px solid #f5c6cb;
+	border-radius: 4px;
+}
+
+.toast {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background-color: #333;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	opacity: 1;
+	animation: fadeInOut 4s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	10% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	90% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
 }
