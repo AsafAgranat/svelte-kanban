@@ -1,12 +1,18 @@
 import { PublicClientApplication, LogLevel } from '@azure/msal-browser';
 import { writable } from 'svelte/store';
+import { PUBLIC_AUTH_REDIRECT_URI } from '$env/static/public';
+
+// NOTE: redirectUri is now configurable via the PUBLIC_AUTH_REDIRECT_URI environment variable.
+// If not provided, it will default to the current origin + '/auth/callback' in the browser,
+// or fall back to the localhost dev URL on the server side.
+const redirectUri = PUBLIC_AUTH_REDIRECT_URI || (typeof window !== 'undefined' ? window.location.origin + '/auth/callback' : 'http://localhost:5173/auth/callback');
 
 // NOTE: Remember to replace YOUR_APPLICATION_CLIENT_ID and update the redirectUri for production.
 const MSAL_CONFIG = {
 	auth: {
 		clientId: 'ed509a72-4ec7-4cbe-a974-06b1c1a570f0', // Your App ID from Azure portal
 		authority: 'https://login.microsoftonline.com/common',
-		redirectUri: 'http://localhost:5173/auth/callback', // Your local redirect URI
+		redirectUri, // Configurable redirect URI
 	},
 	cache: {
 		cacheLocation: 'localStorage',
@@ -21,6 +27,7 @@ const MSAL_CONFIG = {
 					case LogLevel.Warning: console.warn(message); return;
 				}
 			},
+			
 		},
 	},
 };
@@ -91,7 +98,7 @@ export async function logout() {
 	if (currentAccount) {
 		await msalInstance.logoutRedirect({ account: currentAccount });
 	}
-	authState.set({ isAuthenticated: false, isReady: true, user: null, accessToken: null, error: null });
+authState.set({ isAuthenticated: false, isReady: true, user: null, accessToken: null, error: null });
 }
 
 export async function getAccessTokenSilent(request = tokenRequest) {
